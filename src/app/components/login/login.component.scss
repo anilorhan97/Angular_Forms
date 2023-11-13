@@ -1,0 +1,39 @@
+.container{
+    min-width: 300px;
+    max-width:400px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #f5f5f3;
+    border-radius: 8px;
+    padding: 1rem 2rem;
+    .title{
+        font-weight: bold;
+        text-align: center;
+        letter-spacing: 1px;
+        background-color: #0f59c8;
+        color: white;
+        border-radius: 8px;
+        cursor: pointer;
+    }
+    input,.registerBtn:hover{
+        cursor: pointer;
+    }
+    label:not(:nth-last-child(1)){
+        letter-spacing: 0.8px;
+        font-weight:500;
+    }
+    .errors{
+        color: red;
+    }
+    .submitBtn{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        .small{
+            text-align: start;
+        }
+    }
+
+}

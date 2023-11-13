@@ -1,0 +1,131 @@
+
+<div class="container">
+    <h2 class="title py-1">REGISTER</h2>
+    <hr class="hr" />
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        <div class="name my-1">
+            <label for="name" class="mb-1">Ad</label>
+            <input type="text"  class="form-control" formControlName="name"
+            [ngClass]="{'is-invalid':registerForm.get('name')?.invalid && registerForm.get('name')?.touched}" required>
+            <div *ngIf="registerForm.controls['name'].invalid && registerForm.controls['name'].touched && !registerForm.get('name')?.hasError('minlength') && !registerForm.get('name')?.hasError('onlyLetters')" class="text-danger">
+                Ad boş geçilemez.
+            </div>
+            <div *ngIf="registerForm.controls['name'].errors?.['minlength'] && registerForm.controls['name'].touched" class="text-danger">
+                Girdiğiniz isim {{registerForm.get('name')?.errors?.['minlength']?.['actualLength']}} karakter içermektedir. Minimum {{registerForm.get('name')?.errors?.['minlength']?.['requiredLength']}} karakter içermelidir.
+            </div>
+            <div *ngIf="registerForm.get('name')?.hasError('onlyLetters')" class="text-danger">
+                Ad rakam içeremez. Lütfen doğru formatta giriniz.
+            </div>
+        </div>
+
+        <div class="surname my-1">
+            <label for="surname" class="mb-1">Soyad</label>
+            <input type="text"  class="form-control" formControlName="surname"
+            [ngClass]="{'is-invalid':registerForm.get('surname')?.invalid && registerForm.get('surname')?.touched}" required>
+            <div *ngIf="registerForm.controls['surname'].invalid && registerForm.controls['surname'].touched && !registerForm.get('surname')?.hasError('minlength') && !registerForm.get('surname')?.hasError('onlyLetters')" class="text-danger">
+                Soyad boş geçilemez.
+            </div>
+            <div *ngIf="registerForm.controls['surname'].errors?.['minlength'] && registerForm.controls['surname'].touched" class="text-danger">
+                Girdiğiniz isim {{registerForm.get('surname')?.errors?.['minlength']?.['actualLength']}} karakter içermektedir. Minimum {{registerForm.get('surname')?.errors?.['minlength']?.['requiredLength']}} karakter içermelidir.
+            </div>
+            <div *ngIf="registerForm.get('surname')?.hasError('onlyLetters')" class="text-danger">
+                Soyad rakam içeremez. Lütfen doğru formatta giriniz.
+            </div>
+        </div>
+
+        <div class="identityno my-1">
+            <label for="identityno" class="mb-1">Kimlik Numarası</label>
+            <input type="text"  class="form-control" formControlName="identityNo" minlength="11" maxlength="11"
+            [ngClass]="{'is-invalid':registerForm.get('identityNo')?.invalid && registerForm.get('identityNo')?.touched}" required>
+            <div *ngIf="registerForm.controls['identityNo'].invalid && registerForm.controls['identityNo'].touched  && !registerForm.get('identityNo')?.hasError('minlength')" class="text-danger">
+                Kimlik numarası boş geçilemez.
+            </div>
+            <div *ngIf="registerForm.get('identityNo')?.hasError('onlyNumbers')" class="text-danger">
+                Kimlik numarası harf içeremez. Lütfen doğru formatta giriniz.
+            </div>
+            <div *ngIf="registerForm.controls['identityNo']?.errors?.['minlength'] && registerForm.controls['identityNo'].touched && !registerForm.get('identityNo')?.hasError('onlyNumbers')" class="text-danger">
+                Kimlik numarası 11 hane içermelidir.
+            </div>
+        </div>
+
+        <div class="phoneNumber my-1">
+            <label for="phoneNumber" class="mb-1">Telefon Numarası</label>
+            <input type="text"  class="form-control" formControlName="phoneNumber" 
+            minlength="11" maxlength="15" [ngClass]="{'is-invalid':registerForm.get('phoneNumber')?.invalid && registerForm.get('phoneNumber')?.touched}"
+            pattern="^\([1-9]{1}\d{2}\)\s{1}\d{3}\s{1}\d{2}\s{1}\d{2}" 
+            onkeypress="
+            var data = this.value;
+            if (data.match(/^\d{3}$/) !== null) {
+              this.value = '('+data+')' + ' ';
+            } else if (data.match(/^\(\d{3}\)\s{1}\d{3}$/) !== null) {
+              this.value = data + ' ';
+            }else if(data.match(/^\(\d{3}\)\s{1}\d{3}\s{1}\d{2}$/) !== null){
+              this.value = data + ' ';
+            }"
+            required> <!--ang-->
+            <div *ngIf="registerForm.controls['phoneNumber'].invalid && registerForm.controls['phoneNumber'].touched && !registerForm.controls['phoneNumber']?.errors?.['minlength']" class="text-danger">
+                Telefon numarası boş geçilemez.
+            </div>
+            <div *ngIf="registerForm.controls['phoneNumber']?.errors?.['minlength'] && registerForm.controls['phoneNumber'].touched" class="text-danger">
+                Telefon numarası 11 hane içermelidir.
+            </div>
+        </div>
+
+        <div class="birthdate my-1">
+            <label for="birthDate" class="mb-1">Doğum Tarihi</label>
+            <input [ngClass]="{'is-invalid':registerForm.get('birthDate')?.invalid && registerForm.get('birthDate')?.touched}"
+              type="date" id="birthDate" name="birthDate" placeholder="Tarih seçiniz" formControlName="birthDate" [(min)]="minDate" [(max)]="maxDate" class="form-control" required>
+            <div *ngIf="registerForm.controls['birthDate'].invalid && registerForm.controls['birthDate'].touched" class="text-danger">
+                Lütfen doğum tarihi seçiniz.
+            </div>
+        </div>
+
+        <div class="password my-1">
+            <label for="password" class="mb-1">Şifre</label>
+            <input type="text"  class="form-control" formControlName="password" [ngClass]="{'is-invalid':registerForm.get('password')?.invalid && registerForm.get('password')?.touched}" required>
+            <div *ngIf="registerForm.controls['password'].invalid && registerForm.controls['password'].touched && !registerForm.controls['password']?.errors?.['minlength'] && !registerForm.controls['password'].errors?.['pattern']" class="text-danger">
+                Şifre boş geçilemez.
+            </div>
+            <div *ngIf="registerForm.controls['password'].errors?.['minlength'] && registerForm.controls['password'].touched" class="text-danger">
+                Şifre en az 6 karakter olmalıdır.
+            </div>
+            <div *ngIf="registerForm.controls['password'].errors?.['pattern'] && registerForm.controls['password'].touched" class="text-danger">
+                Şifre en az bir büyük harf, bir küçük harf, bir rakam ve bir sembol içermelidir.
+            </div> 
+        </div>
+
+        <div class="repassword my-1">
+            <label for="repassword" class="mb-1">Şifre Tekrar</label>
+            <input type="text"  class="form-control" formControlName="rePassword" [ngClass]="{'is-invalid':registerForm.get('rePassword')?.invalid && registerForm.get('rePassword')?.touched}" required>
+            <div *ngIf="registerForm.controls['rePassword'].invalid && registerForm.controls['rePassword'].touched && !registerForm.controls['rePassword']?.errors?.['minlength'] && !registerForm.controls['rePassword'].errors?.['pattern']" class="text-danger">
+                Şifre boş geçilemez.
+            </div>
+            <div *ngIf="registerForm.controls['rePassword'].errors?.['minlength'] && registerForm.controls['rePassword'].touched" class="text-danger">
+                Şifre en az 6 karakter olmalıdır.
+            </div>
+            <div *ngIf="registerForm.controls['rePassword'].errors?.['pattern'] && registerForm.controls['rePassword'].touched" class="text-danger">
+                Şifre en az bir büyük harf, bir küçük harf, bir rakam ve bir sembol içermelidir.
+            </div>
+        </div>
+
+        <div class="genders my-2">
+            <label for="gender">Cinsiyet: </label>
+                <div class="form-check">
+                    <input type="radio" class="form-check-input ms-1" formControlName="gender" value="Kadın">
+                    <label for="gender" class="ms-1">Kadın</label>
+                </div>
+                <div class="form-check">
+                    <input type="radio" class="form-check-input ms-1" formControlName="gender" value="Erkek">
+                    <label for="gender" class="ms-1">Erkek</label>
+                </div>
+        </div>
+        
+        <div class="submitBtn">
+            <button class="btn btn-primary my-2 px-5 registerBtn" type="submit">Kayıt Ol
+                <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
+            </button>
+            <small class="small">Zaten bir hesabınız var mı ? <a routerLink="/login">Giriş Yap</a></small>
+        </div>
+
+    </form>
+</div>

@@ -1,0 +1,30 @@
+<div class="container">
+    <h2 class="title py-1">LOGIN</h2>
+    <hr class="hr" />
+    <form #frm = "ngForm" (ngSubmit)="login()">
+
+        <div class="identityNo my-1">
+            <label for="identityNo" class="mb-1">T.C Kimlik Numarası</label>
+            <input type="text" class="form-control" name="identityNo" id="identityNo"
+                 minlength="11" maxlength="11" #identityNo="ngModel" pattern="^[0-9]{11}$"
+                 [ngClass]="{'is-invalid':identityNo.errors && identityNo.touched}" [(ngModel)]="user.identityNo" required>
+            <mat-error class="errors" *ngIf="identityNo.errors?.['required'] && identityNo.touched">Bu alan zorunludur.</mat-error>
+            <mat-error class="errors" *ngIf="identityNo.errors?.['pattern'] &&identityNo.touched">T.C Kimlik numarası yalnızca rakam ve 11 haneden oluşmalıdır.</mat-error>
+        </div>
+        
+        <div class="password my-1">
+            <label for="password" class="mb-1">Şifre</label>
+            <input type="password" class="form-control" name="password" [ngClass]="{'is-invalid':password.errors && password.touched}"
+             #password="ngModel" [(ngModel)]="user.password" required>
+             <mat-error class="errors" *ngIf="password.errors?.['required'] && password.touched">Bu alan zorunludur.</mat-error>
+            </div>
+
+        <div class="submitBtn">
+            <button class="btn btn-primary my-2 px-5 registerBtn" type="submit" [disabled]="frm.invalid">Giriş Yap
+                <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
+            </button>
+            <small class="small">Şifrenizi mi unuttunuz ?<a routerLink="" class="ms-1">Şifremi Unuttum</a></small>
+            <small class="small">Hesabınız yok mu ? <a routerLink="/register">Kayıt ol</a></small>
+        </div>    
+    </form>
+</div>
